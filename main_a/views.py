@@ -16,7 +16,15 @@ def ready_test(request, test_id):
 @login_required(login_url='login')
 def test(request, test_id):
     test = get_object_or_404(Test, id=test_id)
-    question = Question.objects.filter(test=test)
-
+    questions = Question.objects.filter(test=test)
+    if request.method == 'POST':
+        for question in questions:
+            given_answer = request.POST[str(question.id)]
+            print('----')
+            print(given_answer)
+            if question.true_answer == given_answer:
+                print(True)
+            else:
+                print(False)
     contex = {'test': test, 'question':question}
     return render(request, 'test.html', contex)
