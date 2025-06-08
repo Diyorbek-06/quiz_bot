@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Test, Question
+from .models import Test, Question, CheckTest, CheckQuestion
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -18,13 +18,13 @@ def test(request, test_id):
     test = get_object_or_404(Test, id=test_id)
     questions = Question.objects.filter(test=test)
     if request.method == 'POST':
+        checktest = CheckTest.objects.create(student=request.user, test=test)
         for question in questions:
             given_answer = request.POST[str(question.id)]
-            print('----')
-            print(given_answer)
-            if question.true_answer == given_answer:
-                print(True)
-            else:
-                print(False)
-    contex = {'test': test, 'question':question}
+            CheckQuestion.objects.create(checktest=checktest, question=question, given_answer=given_answer.true_answer)
+
+    contex = {'test': test, 'questions':questions}
     return render(request, 'test.html', contex)
+
+
+
