@@ -22,9 +22,9 @@ def test(request, test_id):
         for question in questions:
             given_answer = request.POST[str(question.id)]
             CheckQuestion.objects.create(checktest=checktest, question=question, given_answer=given_answer.true_answer)
-
-    contex = {'test': test, 'questions':questions}
-    return render(request, 'test.html', contex)
+        checktest.save()
+    context = {'test': test, 'questions':questions}
+    return render(request, 'test.html', context)
 
 
 
