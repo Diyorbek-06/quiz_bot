@@ -48,7 +48,7 @@ class Question(models.Model):
 class CheckTest(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
-    finded_question = models.PositiveBigIntegerField(default=0)
+    finded_questions = models.PositiveBigIntegerField(default=0)
     user_passed = models.BooleanField(default=False)
     percentage = models.PositiveBigIntegerField(default=0)
 
