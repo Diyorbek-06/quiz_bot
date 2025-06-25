@@ -38,7 +38,7 @@ class TestForm(forms.ModelForm):
         fields = (
             'title',
             'category',
-            'maximum_attemps',
+            'max_attemps',
             'start_date',
             'end_date',  # oldingi xatolik: 'and_date' bo'lishi kerak emas
             'pass_percentage',
