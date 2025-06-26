@@ -10,7 +10,6 @@ def profile(request, user_id):
     return render(request, 'login_html', {'user':user})
 
 
-
 def signup(request):
     form = UserCreationForm()
     if request.method == "POST":
