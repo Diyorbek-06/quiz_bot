@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Natijalar{% endblock %}
+{% block content %}
+<h2>Natijangiz</h2>
+<p>To‘g‘ri javoblar soni: {{ checktest.finded_questions }}</p>
+<p>Foiz: {{ checktest.percentage }}%</p>
+<p>Status: {% if checktest.user_passed %}<span class="text-success">O‘tdingiz</span>{% else %}<span class="text-danger">O‘tmadingiz</span>{% endif %}</p>
 
-</body>
-</html>
+<h3>Savollar</h3>
+<ul>
+  {% for cq in checktest.checkquestion_set.all %}
+    <li>
+      <strong>{{ cq.question.question }}</strong><br>
+      Sizning javobingiz: <strong>{{ cq.given_answer }}</strong> <br>
+      To‘g‘ri javob: <strong>{{ cq.true_answer }}</strong> <br>
+      {% if cq.is_true %}
+        <span class="text-success">To‘g‘ri</span>
+      {% else %}
+        <span class="text-danger">Noto‘g‘ri</span>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

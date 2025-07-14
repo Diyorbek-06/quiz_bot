@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Profil - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>Profile - {{ user.username }}</h3>
+    <div class="row">
+        <!-- Created Tests -->
+        <div class="card p-3 col-md-5 m-2">
+            <h5>Created Tests</h5>
+            {% for i in user.test_set.all %}
+                <p><strong>{{ i.title }}</strong></p>
+                <small class="d-inline">
+                    {{ i.checktest_set.all.count }} attempts |
+                    {{ i.question_set.all.count }} questions |
+                    <a href="{% url 'ready_test' i.id %}">try</a>
+                    {% if user == request.user %}
+                        | <a href="{% url 'new_question' i.id %}">add question</a>
+                    {% endif %}
+                </small>
+                <hr>
+            {% empty %}
+                <p>Hech qanday test yaratilmagan.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Attended Tests -->
+        <div class="card p-3 col-md-5 m-2">
+            <h5>Attended Tests</h5>
+            {% for i in user.checktest_set.all %}
+                <p>{{ i.test.title }}</p>
+                <small class="d-inline">
+                    <a href="{% url 'checktest' i.id %}">details</a> |
+                    {{ i.percentage }}% |
+                    <a href="{% url 'ready_test' i.test.id %}">try again</a>
+                </small>
+                <hr>
+            {% empty %}
+                <p>Hali hech qanday testda qatnashilmagan.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Barcha testlar{% endblock %}
+{% block content %}
+<h2>Testlar ro‘yxati</h2>
+<div class="row">
+  {% for t in test %}
+    <div class="col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ t.title }}</h5>
+          <p class="card-text">Kategoriya: {{ t.category.name }}</p>
+          <p class="card-text">Boshlanish vaqti: {{ t.start_date }}</p>
+          <p class="card-text">Yakunlanish vaqti: {{ t.end_date }}</p>
+          <a href="{% url 'ready_test' t.id %}" class="btn btn-primary">Boshlash</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>Hozircha testlar yo‘q.</p>
+  {% endfor %}
+</div>
+{% endblock %}
